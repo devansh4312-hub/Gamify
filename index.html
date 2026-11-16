@@ -5,115 +5,222 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Daily Run</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#110e18; --panel:#1b1726; --panel2:#241f33; --line:#352e4a; --text:#ece6f7; --dim:#9a90b3;
-  --gold:#ffcc4d; --bio:#5fd38d; --cp:#ff6b6b; --ocw:#a594ff; --curse:#c04cff;
+  --panel:#3b4a50; --panel-hi:#56676d; --inset:#26333a; --edge:#141c20;
+  --blue:#0a8fff; --blue-d:#0062b3; --red:#fe5f55; --red-d:#b8362e;
+  --orange:#ff9d00; --orange-d:#b86f00; --gold:#fdcb3b; --green:#3fbf86; --green-d:#23845a;
+  --purple:#9a6fd0; --cream:#f4ecdb; --ink:#2e2f3e; --dim:#a9b8bd;
+  --bio:#2f9e62; --cp:#e0453c; --ocw:#6a55d6; --curse:#b04cff;
 }
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:15px;line-height:1.45}
-body{background-image:radial-gradient(circle at 20% -10%,#2a1f45 0,transparent 45%),radial-gradient(circle at 110% 30%,#1f2a3f 0,transparent 40%);min-height:100vh}
-.wrap{max-width:620px;margin:0 auto;padding:18px 14px 60px}
-.px{font-family:"Press Start 2P",monospace;letter-spacing:.5px}
-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-header h1{font-size:15px;margin:0;color:var(--gold);text-shadow:2px 2px 0 #6b3d00}
-.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.chip{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:12px;white-space:nowrap}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 3px 0 #0a0810}
-.label{font-size:9px;color:var(--dim);margin-bottom:10px;text-transform:uppercase}
-.mod{border-color:#5c4a1c;background:linear-gradient(90deg,#2a2212,#1b1726)}
-.mod b{color:var(--gold)}
-.kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
-.kind{background:var(--panel2);border:2px solid var(--line);color:var(--text);border-radius:8px;padding:8px 4px;cursor:pointer;font:inherit;font-size:12px;text-align:center}
-.kind .px{font-size:9px;display:block;margin-bottom:4px}
-.kind.on{border-color:var(--gold);background:#2e2614}
-.floor{width:100%;display:flex;align-items:center;gap:12px;background:var(--panel2);border:2px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;color:var(--text);font:inherit;text-align:left;transition:transform .08s}
-.floor:hover{transform:translateX(3px);border-color:var(--c)}
-.floor:active{transform:scale(.98)}
-.floor .ic{font-size:26px;width:34px;text-align:center}
-.floor .nm{font-weight:700}
-.floor .sub{font-size:12px;color:var(--dim)}
-.floor .lv{margin-left:auto;text-align:right;min-width:92px}
-.floor .lv .px{font-size:10px;color:var(--c)}
-.bar{height:7px;background:#0d0b13;border-radius:4px;overflow:hidden;margin-top:6px}
-.bar i{display:block;height:100%;background:var(--c,var(--gold))}
-.hint{font-size:12px;color:var(--dim);margin-top:4px}
-.room{text-align:center;border-color:var(--c);border-width:2px}
-.room .t{font-family:"Press Start 2P";font-size:44px;margin:14px 0 8px;color:var(--c)}
-.room.cursed{border-color:var(--curse)}
-.room.cursed .t{color:var(--curse)}
-.btn{background:var(--panel2);border:2px solid var(--line);color:var(--text);border-radius:8px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}
-.btn:hover{border-color:var(--dim)}
-.btn.gold{background:var(--gold);color:#2a1a00;border-color:#b8860b}
-.btn.curse{border-color:var(--curse);color:#e4b3ff}
-.btn.sm{padding:5px 10px;font-size:12px}
-.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
-.stats .n{font-family:"Press Start 2P";font-size:15px;margin-bottom:6px}
-.stats .k{font-size:11px;color:var(--dim)}
-.inv{display:grid;gap:8px}
-.item{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 10px}
-.item .ic{font-size:22px}
-.item .tx{flex:1;font-size:13px}
-.item .tx b{display:block;font-size:13px}
-.item .ct{font-family:"Press Start 2P";font-size:11px;color:var(--gold);margin-right:4px}
-.empty{color:var(--dim);font-size:13px}
-.hist{display:flex;align-items:flex-end;gap:4px;height:70px}
-.hist div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
-.hist i{display:block;width:100%;background:var(--ocw);border-radius:3px 3px 0 0;min-height:2px}
-.hist i.today{background:var(--gold)}
-.hist span{font-size:9px;color:var(--dim);margin-top:3px}
-details summary{cursor:pointer;color:var(--dim);font-size:13px}
-.set{display:grid;gap:8px;margin-top:10px}
-.set label{font-size:12px;color:var(--dim)}
-.set input{width:100%;background:#0d0b13;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:7px 8px;font:inherit;font-size:13px}
-.overlay{position:fixed;inset:0;background:rgba(8,6,12,.85);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
-.modal{background:var(--panel);border:2px solid var(--gold);border-radius:12px;max-width:380px;width:100%;padding:22px;text-align:center;box-shadow:0 0 40px #ffcc4d33}
-.modal h2{font-size:13px;color:var(--gold);margin:0 0 12px;line-height:1.6}
-.die{font-family:"Press Start 2P";font-size:54px;margin:12px 0;color:var(--text)}
-.die.rare{color:var(--gold);text-shadow:0 0 18px var(--gold)}
-.loot{font-size:15px;margin:6px 0 4px;font-weight:700}
-.loot small{display:block;font-weight:400;color:var(--dim);margin-top:4px}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:13px;z-index:20;max-width:90vw;text-align:center}
-.sync{font-size:11px;color:var(--dim);text-align:center;margin-top:8px}
-@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
-.rolling{animation:shake .15s infinite}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:#123a33;color:#fff;font-family:"Pixelify Sans",monospace;font-size:16px;line-height:1.2}
+#bg{position:fixed;inset:0;width:100%;height:100%;image-rendering:pixelated;z-index:0}
+.crt{position:fixed;inset:0;pointer-events:none;z-index:50;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.09) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45) 100%)}
+.sh{text-shadow:2px 2px 0 rgba(0,0,0,.45)}
+button{font-family:inherit;color:inherit;cursor:pointer;border:none}
+
+/* ---------- layout ---------- */
+.app{position:relative;z-index:1;height:100dvh;display:grid;gap:12px;padding:12px;
+  grid-template-columns:280px minmax(0,1fr) 230px;grid-template-rows:minmax(0,1fr);max-width:1400px;margin:0 auto}
+.panel{background:var(--panel);border-radius:16px;box-shadow:inset 0 0 0 3px var(--panel-hi),0 5px 0 var(--edge);padding:12px}
+.side{display:flex;flex-direction:column;gap:10px;min-height:0}
+.table{display:flex;flex-direction:column;gap:10px;min-height:0}
+.inset{background:var(--inset);border-radius:11px;padding:9px 10px}
+.lbl{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+
+.titlebar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:24px;font-weight:700;letter-spacing:1px;color:#fff}
+.title span{color:var(--gold)}
+.gear{background:var(--orange);box-shadow:0 4px 0 var(--orange-d);border-radius:10px;width:40px;height:36px;font-size:18px}
+.gear:active{transform:translateY(3px);box-shadow:0 1px 0 var(--orange-d)}
+
+.blind{background:linear-gradient(135deg,#6b2f8a,#3d2a6b);box-shadow:inset 0 0 0 3px #a774c9,0 4px 0 var(--edge);border-radius:13px;padding:10px 12px}
+.blind .nm{font-size:22px;font-weight:700;color:var(--gold)}
+.blind .ds{font-size:14px;color:#e9dcff;margin-top:3px}
+
+.score{display:flex;align-items:stretch;gap:6px}
+.chipbox{flex:1;border-radius:11px;padding:6px 8px;text-align:center}
+.chipbox span{display:block;font-size:12px;opacity:.85;letter-spacing:1px}
+.chipbox b{display:block;font-size:30px;line-height:1.05}
+.chipbox.blue{background:var(--blue);box-shadow:0 4px 0 var(--blue-d)}
+.chipbox.red{background:var(--red);box-shadow:0 4px 0 var(--red-d)}
+.x{align-self:center;font-size:24px;color:var(--red);font-weight:700}
+
+.minis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.mini{background:var(--inset);border-radius:10px;padding:6px 2px}
+.mini b{display:block;font-size:20px}
+.mini span{font-size:11px;color:var(--dim)}
+.money b{color:var(--gold)}
+
+.vault .row1{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.vault .row1 b{color:var(--gold);white-space:nowrap}
+.bar{height:9px;background:#11191d;border-radius:5px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--c,var(--gold));border-radius:5px;transition:width .4s}
+.claim{margin-top:7px;width:100%}
+
+/* ---------- buttons ---------- */
+.b{border-radius:11px;padding:9px 14px;font-size:17px;font-weight:700;text-shadow:2px 2px 0 rgba(0,0,0,.35);transition:transform .05s}
+.b:active{transform:translateY(3px)}
+.b.org{background:var(--orange);box-shadow:0 4px 0 var(--orange-d)}
+.b.red{background:var(--red);box-shadow:0 4px 0 var(--red-d)}
+.b.blu{background:var(--blue);box-shadow:0 4px 0 var(--blue-d)}
+.b.grn{background:var(--green);box-shadow:0 4px 0 var(--green-d)}
+.b.dk{background:var(--inset);box-shadow:0 4px 0 var(--edge)}
+.b.sm{padding:6px 10px;font-size:14px}
+.b:active.org,.b:active.red,.b:active.blu,.b:active.grn,.b:active.dk{box-shadow:0 1px 0 var(--edge)}
+
+/* ---------- table ---------- */
+.kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kind{background:var(--inset);box-shadow:0 4px 0 var(--edge);border-radius:11px;padding:7px 4px;text-align:center}
+.kind b{display:block;font-size:18px}
+.kind span{font-size:12px;color:var(--dim)}
+.kind.on{background:var(--blue);box-shadow:0 4px 0 var(--blue-d)}
+.kind.on span{color:#dcefff}
+.play{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px}
+.play .hint{font-size:14px;color:var(--dim);text-align:center}
+.hand{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,22px)}
+.card{flex:0 1 190px;height:min(100%,280px);background:none;padding:0;animation:float 3.2s ease-in-out infinite;animation-delay:var(--d)}
+.face{height:100%;background:var(--cream);color:var(--ink);border-radius:13px;box-shadow:inset 0 0 0 3px #fff,0 7px 0 rgba(0,0,0,.35);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 10px;position:relative;transition:transform .15s}
+.card:hover .face{transform:translateY(-12px) rotate(-2deg) scale(1.04)}
+.card:active .face{transform:translateY(-4px) scale(.98)}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-.7deg)}50%{transform:translateY(-6px) rotate(.7deg)}}
+.rank{position:absolute;top:8px;left:10px;font-size:15px;font-weight:700;color:var(--c)}
+.rank2{position:absolute;bottom:8px;right:10px;font-size:15px;font-weight:700;color:var(--c);transform:rotate(180deg)}
+.em{font-size:clamp(34px,6vh,58px);filter:drop-shadow(2px 3px 0 rgba(0,0,0,.18))}
+.cn{font-size:clamp(16px,2.4vh,21px);font-weight:700;text-align:center;color:var(--c)}
+.cs{font-size:12px;color:#6f6a7a;text-align:center}
+.face .bar{width:82%;background:#ddd2bd}
+.cx{font-size:12px;color:#6f6a7a}
+
+.room{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;gap:clamp(12px,4vw,40px)}
+.room .card{animation:none;flex:0 0 auto;width:clamp(120px,22vw,180px);height:min(100%,250px)}
+.room .card .face{box-shadow:inset 0 0 0 3px #fff,0 0 0 4px var(--c),0 0 28px var(--c)}
+.room.cursed .card .face{box-shadow:inset 0 0 0 3px #fff,0 0 0 4px var(--curse),0 0 28px var(--curse);filter:saturate(.5)}
+.tbox{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.timer{font-size:clamp(54px,11vh,110px);font-weight:700;line-height:1;background:var(--inset);border-radius:14px;padding:8px 20px;box-shadow:inset 0 0 0 3px var(--panel-hi)}
+.cursed .timer{color:#e2b6ff}
+.tbox .bar{width:100%;height:11px}
+.tbox .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+
+.hist{display:flex;align-items:flex-end;gap:5px;height:58px;padding-top:4px}
+.hist div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.hist i{display:block;width:100%;min-height:3px;background:var(--blue);border-radius:3px 3px 0 0}
+.hist i.t{background:var(--gold)}
+.hist span{font-size:10px;color:var(--dim);height:11px}
+.histwrap{padding:9px 12px}
+
+/* ---------- inventory ---------- */
+.slots{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.slot{flex:1;min-height:0;max-height:150px;background:var(--inset);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;position:relative}
+.slot.off{opacity:.45}
+.slot .ic{font-size:clamp(24px,4vh,34px)}
+.slot .tn{font-size:16px;font-weight:700}
+.slot .rw{font-size:12px;color:var(--dim);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.slot .ct{position:absolute;top:6px;right:8px;font-size:18px;font-weight:700;color:var(--gold)}
+.slot.rare{box-shadow:inset 0 0 0 2px var(--gold)}
+.invblk{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.pity{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:13px;color:var(--dim)}
+.pips{display:flex;gap:4px}
+.pips i{width:14px;height:14px;border-radius:4px;background:#11191d}
+.pips i.on{background:var(--purple)}
+
+/* ---------- overlay ---------- */
+.ov{position:fixed;inset:0;z-index:40;background:rgba(5,15,13,.72);display:flex;align-items:center;justify-content:center;padding:14px}
+.modal{width:min(400px,100%);max-height:100%;overflow:auto;text-align:center}
+.modal h2{font-size:30px;color:var(--gold);margin-bottom:4px}
+.modal .sub{color:var(--dim);font-size:15px}
+.earn{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.earn div{white-space:nowrap;border-radius:10px;padding:6px 12px;font-size:20px;font-weight:700}
+.bonus{color:var(--gold);font-size:16px;margin:4px 0}
+.die{width:110px;height:130px;margin:10px auto;background:var(--cream);color:var(--ink);border-radius:13px;box-shadow:inset 0 0 0 3px #fff,0 6px 0 rgba(0,0,0,.35);
+  display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:700}
+.die.rare{color:#b8860b;box-shadow:inset 0 0 0 3px #fff,0 0 0 4px var(--gold),0 0 30px var(--gold)}
+.die.dead{background:#4a3a5a;color:#e2b6ff}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg) scale(1.05)}75%{transform:rotate(9deg) scale(1.05)}}
+.rolling{animation:shake .14s infinite}
+.lootline{font-size:20px;font-weight:700;margin:6px 0 2px}
+.lootsub{font-size:14px;color:var(--dim)}
+.modal .b{margin-top:12px}
+.set{display:grid;gap:8px;text-align:left;margin-top:10px}
+.set label{font-size:13px;color:var(--dim)}
+.set input{width:100%;margin-top:3px;background:var(--inset);border:2px solid var(--panel-hi);color:#fff;border-radius:8px;padding:7px 8px;font:inherit;font-size:15px}
+.sync{font-size:12px;color:var(--dim);margin-top:8px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:45;max-width:90vw;text-align:center;font-size:15px}
+
+/* ---------- mobile: one screen, stacked ---------- */
+@media (max-width:860px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto auto auto minmax(0,1fr) auto auto;gap:8px;padding:8px;
+    grid-template-areas:"tb" "mod" "sc" "tab" "inv" "vt"}
+  .side{display:contents}
+  .titlebar{grid-area:tb}.blind{grid-area:mod}.scoreblk{grid-area:sc}.vault{grid-area:vt}.table{grid-area:tab}.invblk{grid-area:inv}
+  .title{font-size:20px}
+  .blind{padding:7px 10px}.blind .nm{font-size:17px}.blind .ds{font-size:12px}
+  .scoreblk{display:flex;gap:6px}
+  .scoreblk .score{flex:1}
+  .chipbox b{font-size:22px}.chipbox span{font-size:10px}
+  .minis{flex:1.3;grid-template-columns:repeat(4,1fr)}
+  .mini{padding:4px 1px}.mini b{font-size:16px}.mini span{font-size:9px}
+  .x{font-size:16px}
+  .table{gap:8px}
+  .play{padding:8px}
+  .play .hint{font-size:12px}
+  .kind{padding:5px 2px}.kind b{font-size:15px}.kind span{font-size:10px}
+  .card{height:min(100%,210px)}
+  .face{padding:8px 5px}
+  .cs{display:none}
+  .histwrap{display:none}
+  .invblk{flex-direction:row;gap:6px;align-items:stretch}
+  .invblk .lbl{display:none}
+  .slots{flex-direction:row;gap:6px}
+  .slot{padding:5px;max-height:none}
+  .slot .rw{display:none}
+  .slot .tn{font-size:12px}
+  .pity{flex-direction:column;justify-content:center;font-size:10px;background:var(--inset);border-radius:10px;padding:4px 6px}
+  .pips i{width:9px;height:9px}
+  .vault{padding:7px 10px}
+  .room{flex-direction:column;gap:8px}
+  .room .card{height:auto;width:110px}
+  .room .card .face{height:130px}
+  .room .em{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){.card{animation:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1 class="px">THE DAILY RUN</h1>
-    <div class="chips" id="chips"></div>
-  </header>
-  <div class="panel mod" id="mod"></div>
-  <div id="main"></div>
-  <div class="panel"><div class="label px">Today's run</div><div class="stats" id="stats"></div></div>
-  <div class="panel"><div class="label px">Inventory</div><div class="inv" id="inv"></div></div>
-  <div class="panel"><div class="label px">The Vault</div><div id="vault"></div></div>
-  <div class="panel"><div class="label px">Last 14 runs</div><div class="hist" id="hist"></div></div>
-  <div class="panel">
-    <details id="settingsBox"><summary>Settings: rewards &amp; vault goal</summary>
-      <div class="set">
-        <label>📦 Small chest reward<input id="sSmall"></label>
-        <label>🎁 Chest reward<input id="sChest"></label>
-        <label>👑 Rare chest reward<input id="sRare"></label>
-        <label>🏆 Vault goal (what you're saving coins for)<input id="sGoal"></label>
-        <label>Coins needed<input id="sCost" type="number" min="1"></label>
-        <div><button class="btn sm gold" id="saveSet">Save settings</button></div>
-        <label style="margin-top:8px">Backup (progress lives in this browser)</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" onclick="exportBackup()">⬇ Export backup</button>
-          <label class="btn sm" style="color:var(--text);font-size:12px">⬆ Import backup<input type="file" accept=".json,application/json" style="display:none" onchange="importBackup(this.files[0]);this.value=''"></label></div>
-      </div>
-    </details>
-  </div>
-  <div class="sync" id="sync"></div>
+<canvas id="bg"></canvas>
+<div class="crt"></div>
+
+<div class="app">
+  <aside class="side left">
+    <div class="titlebar"><div class="title sh">THE DAILY <span>RUN</span></div><button class="gear" onclick="openSettings()" aria-label="Settings">⚙</button></div>
+    <div class="blind" id="mod"></div>
+    <div class="panel scoreblk" id="score"></div>
+    <div class="panel vault" id="vault"></div>
+  </aside>
+
+  <main class="table">
+    <div class="kinds" id="kinds"></div>
+    <div class="panel play" id="play"></div>
+    <div class="panel histwrap"><div class="lbl">Last 14 runs</div><div class="hist" id="hist"></div></div>
+  </main>
+
+  <aside class="side right">
+    <div class="panel invblk">
+      <div class="lbl">Inventory</div>
+      <div class="slots" id="slots"></div>
+      <div class="pity" id="pity"></div>
+    </div>
+  </aside>
 </div>
 <div id="overlay"></div>
 <div id="toastBox"></div>
 
 <script>
+/* ================= data ================= */
 const FLOORS={
   bio:{name:"Bio Lectures",icon:"🧬",c:"var(--bio)",sub:"MSc lectures & notes"},
   cp:{name:"Coding",icon:"⚔️",c:"var(--cp)",sub:"CP, contests, projects"},
@@ -130,155 +237,207 @@ const MODS=[
   {id:"speed",name:"Speedrun",desc:"Clear 6 rooms before 6 PM for a bonus Chest."},
   {id:"glass",name:"Glass Cannon",desc:"Clean rooms give 1.5× XP. Cursed rooms give nothing."},
   {id:"early",name:"Early Bird",desc:"Rooms started before noon give double XP."},
-  {id:"siege",name:"Night Siege",desc:"Rooms started after 7 PM get +4 on loot rolls. Take the evening back."},
+  {id:"siege",name:"Night Siege",desc:"Rooms started after 7 PM get +4 on loot rolls."},
   {id:"combo",name:"Combo Chain",desc:"Each clean room in a row adds +1 to your next roll. A curse resets it."}
 ];
-const TIERS={
-  small:{name:"Small chest",icon:"📦"},
-  chest:{name:"Chest",icon:"🎁"},
-  rare:{name:"Rare chest",icon:"👑"}
-};
+const TIERS={small:{name:"Small chest",icon:"📦"},chest:{name:"Chest",icon:"🎁"},rare:{name:"Rare chest",icon:"👑"}};
 const LS="daily-run-v1";
 
 function defaults(){return{v:1,updatedAt:0,xp:{bio:0,cp:0,ocw:0},coins:0,inv:{small:0,chest:0,rare:0},days:{},active:null,pending:null,pity:0,kind:"room",
   settings:{small:"Snack or a 5-min walk",chest:"20 min of guilt-free gaming",rare:"One full roguelike run + food order",goal:"Buy a new roguelike on sale",cost:40}}}
 function norm(s){const d=defaults();if(!s||typeof s!=="object")return d;
   const o=Object.assign(d,s);o.xp=Object.assign(defaults().xp,s.xp||{});o.inv=Object.assign(defaults().inv,s.inv||{});o.settings=Object.assign(defaults().settings,s.settings||{});o.days=s.days||{};return o;}
-
 let S=defaults();
 try{const raw=localStorage.getItem(LS);if(raw)S=norm(JSON.parse(raw));}catch(e){}
 
-// ---------- time helpers (a "day" ends at 4 AM, for night owls) ----------
+/* ================= helpers ================= */
 function dayKey(t){const d=new Date((t||Date.now())-4*3600e3);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-function today(){const k=dayKey();if(!S.days[k])S.days[k]={rooms:0,clean:0,cursed:0,xp:0,combo:0,speed:false};return S.days[k];}
-function todayPeek(){return S.days[dayKey()]||{rooms:0,clean:0,cursed:0,xp:0,combo:0,speed:false};}
+const blankDay=()=>({rooms:0,clean:0,cursed:0,xp:0,combo:0,speed:false});
+function today(){const k=dayKey();if(!S.days[k])S.days[k]=blankDay();return S.days[k];}
+function todayPeek(){return S.days[dayKey()]||blankDay();}
 function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return Math.abs(h);}
 function mod(){return MODS[hash(dayKey()+"run")%MODS.length];}
-function hourNow(){return new Date().getHours();}
-
+const hourNow=()=>new Date().getHours();
 function level(xp){let L=1,need=100;while(xp>=need){xp-=need;L++;need+=50;}return{L,cur:xp,need};}
-function streak(){let n=0;const t=new Date();let k=dayKey();if(!(S.days[k]&&S.days[k].rooms>0)){t.setDate(t.getDate()-1);}
-  for(let i=0;i<4000;i++){const kk=dayKey(t.getTime());if(S.days[kk]&&S.days[kk].rooms>0){n++;t.setDate(t.getDate()-1);}else break;}return n;}
+function streak(){let n=0;const t=new Date();if(!(S.days[dayKey()]&&S.days[dayKey()].rooms>0))t.setDate(t.getDate()-1);
+  for(let i=0;i<4000;i++){const k=dayKey(t.getTime());if(S.days[k]&&S.days[k].rooms>0){n++;t.setDate(t.getDate()-1);}else break;}return n;}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function fmt(ms){ms=Math.max(0,ms);const s=Math.ceil(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+  return (h?h+":"+String(m).padStart(2,"0"):String(m).padStart(2,"0"))+":"+String(x).padStart(2,"0");}
 
-// ---------- persistence (browser storage) ----------
+/* ================= saving: browser + (inside Claude) your account ================= */
+let docRef=null,saving=false,dirty=false,syncMsg="Progress saves in this browser.";
 function save(){S.updatedAt=Date.now();
   const ks=Object.keys(S.days).sort();if(ks.length>400)ks.slice(0,ks.length-400).forEach(k=>delete S.days[k]);
-  try{localStorage.setItem(LS,JSON.stringify(S));setSync("Saved in this browser ✓ — use Export backup to move it to another device.");}
-  catch(e){setSync("Couldn't save — your browser is blocking storage (private mode?).");}}
-function setSync(t){document.getElementById("sync").textContent=t;}
-function exportBackup(){const blob=new Blob([JSON.stringify(S)],{type:"application/json"});const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);a.download="daily-run-backup-"+dayKey()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
-function importBackup(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=="object"||!d.xp)throw 0;
-  S=norm(d);save();render();toast("Backup restored.");}catch(e){toast("That file isn't a Daily Run backup.");}};r.readAsText(file);}
+  try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){syncMsg="Your browser is blocking storage (private mode?) — progress won't survive a reload.";}
+  if(docRef){dirty=true;flush();}}
+async function flush(){if(!docRef||saving||!dirty)return;saving=true;dirty=false;
+  try{await docRef.set(JSON.parse(JSON.stringify(S)));syncMsg="Synced to your Claude account ✓";}
+  catch(e){if(e&&e.code==="unavailable"){dirty=true;saving=false;setTimeout(flush,1500+Math.random()*1500);return;}syncMsg="Couldn't sync — saved in this browser only.";}
+  saving=false;if(dirty)flush();}
+async function pull(){if(!docRef)return;try{const snap=await docRef.get();
+  if(snap.exists){const r=norm(snap.data());if((r.updatedAt||0)>(S.updatedAt||0)){S=r;try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}render();}
+    else if((S.updatedAt||0)>(r.updatedAt||0)){dirty=true;flush();}}
+  else if(S.updatedAt){dirty=true;flush();}
+  syncMsg="Synced to your Claude account ✓";}catch(e){}}
+(async()=>{if(!(window.claude&&window.claude.use))return;
+  try{const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);const uid=user?await user.id():null;
+    if(db&&uid){docRef=db.doc("data/users/"+uid+"/run");await pull();}}catch(e){}})();
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){pull();tick();}});
 window.addEventListener("storage",e=>{if(e.key===LS&&e.newValue){try{S=norm(JSON.parse(e.newValue));render();}catch(_){}}});
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")tick();});
-setSync("Progress saves in this browser. Use Export backup (in Settings) to move it to another device.");
+function exportBackup(){try{const blob=new Blob([JSON.stringify(S)],{type:"application/json"});const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download="daily-run-backup-"+dayKey()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}catch(e){toast("Export isn't available here.");}}
+function importBackup(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=="object"||!d.xp)throw 0;
+  S=norm(d);save();settingsOpen=false;render();toast("Backup restored.");}catch(e){toast("That file isn't a Daily Run backup.");}};r.readAsText(file);}
 
-// ---------- audio ----------
+/* ================= sound ================= */
 let actx=null;
 function primeAudio(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume();}catch(e){}}
 function chime(){if(!actx)return;try{[523,659,784,1047].forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type="square";o.frequency.value=f;
-  g.gain.setValueAtTime(.08,actx.currentTime+i*.12);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+i*.12+.25);
+  g.gain.setValueAtTime(.07,actx.currentTime+i*.12);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+i*.12+.25);
   o.connect(g).connect(actx.destination);o.start(actx.currentTime+i*.12);o.stop(actx.currentTime+i*.12+.3);});}catch(e){}}
 
-// ---------- actions ----------
-function startRoom(floor){primeAudio();const k=S.kind;S.active={floor,kind:k,start:Date.now(),dur:KINDS[k].min*60e3,cursed:false,hour:hourNow()};save();render();}
-function curse(){if(!S.active||S.active.cursed)return;S.active.cursed=true;const d=today();d.combo=0;save();render();toast("☠️ Cursed. The room still counts — just no loot. Put the phone away and finish it.");}
+/* ================= notifications ================= */
+function askNotify(){try{if("Notification" in window&&Notification.permission==="default")Notification.requestPermission();}catch(e){}}
+function notify(title,body){try{if("Notification" in window&&Notification.permission==="granted"){const n=new Notification(title,{body,tag:"daily-run"});n.onclick=()=>{window.focus();n.close();};}}catch(e){}}
+
+/* ================= actions ================= */
+function setKind(k){S.kind=k;save();render();}
+function startRoom(f){primeAudio();askNotify();S.brk=null;const k=S.kind;S.active={floor:f,kind:k,start:Date.now(),dur:KINDS[k].min*60e3,cursed:false,hour:hourNow()};save();render();}
+function curse(){if(!S.active||S.active.cursed)return;S.active.cursed=true;today().combo=0;save();render();toast("☠ Cursed. The room still counts — just no loot. Phone away, finish it.");}
 let abandonArmed=false;
 function abandon(){if(!abandonArmed){abandonArmed=true;render();setTimeout(()=>{abandonArmed=false;render();},3000);return;}
   abandonArmed=false;S.active=null;save();render();toast("Room abandoned. No XP, no shame — start another.");}
 function finishRoom(){const a=S.active;if(!a)return;const K=KINDS[a.kind],m=mod(),d=today();
   let mult=1;if(m.id==="boss"&&a.kind==="boss")mult=2;if(m.id==="early"&&a.hour<12)mult=2;if(m.id==="glass")mult=a.cursed?0:1.5;
-  const xp=Math.round(K.xp*mult);S.xp[a.floor]+=xp;S.coins+=K.coins;d.rooms++;d.xp+=xp;
-  if(a.cursed)d.cursed++;else{d.clean++;}
-  let bonus=[];
+  const xp=Math.round(K.xp*mult);S.xp[a.floor]+=xp;S.coins+=K.coins;d.rooms++;d.xp+=xp;if(a.cursed)d.cursed++;else d.clean++;
+  const bonus=[];
   if(a.kind==="boss"&&!a.cursed){S.inv.chest++;bonus.push("Boss defeated → free 🎁 Chest");}
   if(m.id==="speed"&&!d.speed&&d.rooms>=6&&hourNow()<18){d.speed=true;S.inv.chest++;bonus.push("Speedrun complete → bonus 🎁 Chest");}
   S.pending={floor:a.floor,kind:a.kind,cursed:a.cursed,xp,coins:K.coins,hour:a.hour,bonus,roll:null};
-  S.active=null;save();chime();render();}
+  S.active=null;save();chime();notify(a.cursed?"Room cleared (cursed)":"Room cleared! 🎲",a.cursed?"No loot this time. Come back for your break.":"Come back and roll for loot.");render();}
 function roll(){const p=S.pending;if(!p||p.roll)return;const m=mod(),d=today();
   let b=0;if(m.id==="lucky")b+=3;if(m.id==="siege"&&p.hour>=19)b+=4;if(m.id==="combo")b+=d.combo;
-  let nat=1+Math.floor(Math.random()*20),pity=false;
-  if(S.pity>=4&&nat+b<16){nat=Math.max(nat,16-b);pity=true;}
+  let nat=1+Math.floor(Math.random()*20),pity=false;if(S.pity>=4&&nat+b<16){nat=Math.max(nat,16-b);pity=true;}
   const tot=nat+b;let tier=null;if(tot>=20)tier="rare";else if(tot>=16)tier="chest";else if(tot>=10)tier="small";
-  if(tier)S.inv[tier]++;S.pity=(tier==="chest"||tier==="rare")?0:S.pity+1;
-  if(m.id==="combo")d.combo++;
+  if(tier)S.inv[tier]++;S.pity=(tier==="chest"||tier==="rare")?0:S.pity+1;if(m.id==="combo")d.combo++;
   p.roll={nat,b,tot,tier,pity};
-  // animate
-  const el=document.getElementById("die");if(el){el.classList.add("rolling");let n=0;const iv=setInterval(()=>{el.textContent=1+Math.floor(Math.random()*20);if(++n>12){clearInterval(iv);el.classList.remove("rolling");save();render();}},70);}else{save();render();}
-}
-function closeLoot(){S.pending=null;save();render();}
+  const el=document.getElementById("die");
+  if(el){el.classList.add("rolling");let n=0;const iv=setInterval(()=>{el.textContent=1+Math.floor(Math.random()*20);if(++n>12){clearInterval(iv);save();render();}},70);}else{save();render();}}
+function closeLoot(){const p=S.pending;S.pending=null;
+  if(p&&p.kind!=="warm"){const m=p.kind==="boss"?20:10;S.brk={start:Date.now(),dur:m*60e3};}
+  save();render();}
+function endBreak(auto){S.brk=null;save();if(auto){chime();notify("Break's over ⚔","Back to the dungeon — pick your next room.");toast("Break's over. Back to the dungeon ⚔");}render();}
 function useItem(t){if(S.inv[t]<=0)return;S.inv[t]--;save();render();toast(TIERS[t].icon+" Enjoy: "+S.settings[t]);}
 function claimVault(){const c=Number(S.settings.cost)||40;if(S.coins<c)return;S.coins-=c;save();render();toast("🏆 Unlocked: "+S.settings.goal+". You earned it.");}
-function setKind(k){S.kind=k;save();render();}
+let settingsOpen=false;
+function openSettings(){settingsOpen=true;renderOverlay();}
+function closeSettings(){settingsOpen=false;renderOverlay();}
+function saveSettings(){const g=id=>document.getElementById(id).value.trim(),D=defaults().settings;
+  S.settings.small=g("sSmall")||D.small;S.settings.chest=g("sChest")||D.chest;S.settings.rare=g("sRare")||D.rare;S.settings.goal=g("sGoal")||D.goal;
+  S.settings.cost=Math.max(1,parseInt(g("sCost"))||40);save();settingsOpen=false;render();toast("Settings saved.");}
+function toast(t){const b=document.getElementById("toastBox");b.innerHTML='<div class="panel toast">'+esc(t)+'</div>';clearTimeout(toast._t);toast._t=setTimeout(()=>b.innerHTML="",3800);}
 
-function toast(t){const b=document.getElementById("toastBox");b.innerHTML='<div class="toast">'+esc(t)+'</div>';clearTimeout(toast._t);toast._t=setTimeout(()=>b.innerHTML="",3800);}
-
-// ---------- render ----------
-function fmt(ms){ms=Math.max(0,ms);const s=Math.ceil(ms/1000);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+/* ================= render ================= */
+const $=id=>document.getElementById(id);
+function cardHTML(f,i,click){const F=FLOORS[f],l=level(S.xp[f]);
+  return `<button class="card" style="--c:${F.c};--d:${-i*0.9}s" ${click?`onclick="startRoom('${f}')"`:"tabindex=-1"}><div class="face">
+    <div class="rank">LV${l.L}</div><div class="rank2">LV${l.L}</div>
+    <div class="em">${F.icon}</div><div class="cn">${esc(F.name)}</div><div class="cs">${esc(F.sub)}</div>
+    <div class="bar" style="--c:${F.c}"><i style="width:${(l.cur/l.need*100).toFixed(0)}%"></i></div><div class="cx">${l.cur}/${l.need} XP</div></div></button>`;}
 function render(){
   const d=todayPeek(),m=mod();
-  document.getElementById("chips").innerHTML=`<span class="chip">🔥 ${streak()} day streak</span><span class="chip">🪙 ${S.coins}</span>`;
-  document.getElementById("mod").innerHTML=`<div class="label px">Today's modifier</div><b>${esc(m.name)}</b> — ${esc(m.desc)}${m.id==="combo"?` <span style="color:var(--gold)">(current: +${d.combo})</span>`:""}`;
-  const main=document.getElementById("main");
+  $("mod").innerHTML=`<div class="lbl" style="color:#d6c2f0">Today's modifier</div><div class="nm sh">${esc(m.name)}</div><div class="ds">${esc(m.desc)}${m.id==="combo"?` <b style="color:var(--gold)">(+${d.combo})</b>`:""}</div>`;
+  $("score").innerHTML=`<div class="score"><div class="chipbox blue sh"><span>ROOMS</span><b>${d.rooms}</b></div><div class="x sh">×</div><div class="chipbox red sh"><span>XP TODAY</span><b>${d.xp}</b></div></div>
+    <div class="minis" style="margin-top:8px"><div class="mini"><b>${d.clean}</b><span>clean</span></div><div class="mini"><b style="color:#e2b6ff">${d.cursed}</b><span>cursed</span></div>
+    <div class="mini"><b>🔥${streak()}</b><span>streak</span></div><div class="mini money"><b>$${S.coins}</b><span>coins</span></div></div>`;
+  const c=Number(S.settings.cost)||40;
+  $("vault").innerHTML=`<div class="lbl">The Vault</div><div class="row1"><span>🏆 ${esc(S.settings.goal)}</span><b>$${S.coins}/${c}</b></div>
+    <div class="bar"><i style="width:${Math.min(100,S.coins/c*100)}%"></i></div>${S.coins>=c?`<button class="b org sm claim" onclick="claimVault()">Claim reward</button>`:""}`;
+  $("kinds").innerHTML=Object.entries(KINDS).map(([k,K])=>`<button class="kind sh ${S.kind===k?"on":""}" onclick="setKind('${k}')" ${S.active?"disabled":""}><b>${K.name}</b><span>${K.sub}</span></button>`).join("");
   if(S.active){const a=S.active,F=FLOORS[a.floor],K=KINDS[a.kind];
-    main.innerHTML=`<div class="panel room ${a.cursed?"cursed":""}" style="--c:${F.c}">
-      <div class="label px">${F.icon} ${esc(F.name)} · ${K.name}</div>
-      <div class="t" id="timer">${fmt(a.start+a.dur-Date.now())}</div>
-      <div class="bar" style="--c:${a.cursed?"var(--curse)":F.c}"><i id="tbar" style="width:0%"></i></div>
-      <div class="hint">${a.cursed?"Cursed — finish anyway. XP still counts.":"Phone face-down, out of reach. You've got this."}</div>
-      <div class="row">${a.cursed?"":`<button class="btn curse" onclick="curse()">📱 I picked up my phone</button>`}
-      <button class="btn" onclick="abandon()">${abandonArmed?"Tap again to abandon":"Abandon"}</button></div></div>`;
+    $("play").innerHTML=`<div class="room ${a.cursed?"cursed":""}">${cardHTML(a.floor,0,false)}
+      <div class="tbox"><div class="lbl">${esc(F.name)} · ${K.name}</div><div class="timer sh" id="timer">${fmt(a.start+a.dur-Date.now())}</div>
+      <div class="bar" style="--c:${a.cursed?"var(--curse)":F.c}"><i id="tbar"></i></div>
+      <div class="hint">${a.cursed?"Cursed — finish anyway. XP still counts.":"Phone face-down, out of reach."}</div>
+      <div class="btns">${a.cursed?"":`<button class="b red sm" onclick="curse()">📱 I picked up my phone</button>`}<button class="b dk sm" onclick="abandon()">${abandonArmed?"Tap again to abandon":"Abandon"}</button></div></div></div>`;
+  }else if(S.brk){const b=S.brk;
+    $("play").innerHTML=`<div class="room"><div class="tbox"><div class="lbl">Break · ${Math.round(b.dur/60e3)} min</div>
+      <div class="timer sh" id="btimer" style="color:#bff0d6">${fmt(b.start+b.dur-Date.now())}</div>
+      <div class="bar" style="--c:var(--green)"><i id="bbar"></i></div>
+      <div class="hint">Stand up, drink water, look out a window. Not Reels — they don't end in ${Math.round(b.dur/60e3)} minutes.</div>
+      <div class="btns"><button class="b grn" onclick="endBreak(false)">⚔ Skip break — next room</button></div></div></div>`;
   }else{
-    const first=d.rooms===0;
-    main.innerHTML=`<div class="panel"><div class="label px">${first?"Start with Room 0 — just open the work":"Pick a room, then a floor"}</div>
-      <div class="kinds">${Object.entries(KINDS).map(([k,K])=>`<button class="kind ${S.kind===k?"on":""}" onclick="setKind('${k}')"><span class="px">${K.name}</span>${K.sub}</button>`).join("")}</div>
-      ${Object.entries(FLOORS).map(([f,F])=>{const l=level(S.xp[f]);return `<button class="floor" style="--c:${F.c}" onclick="startRoom('${f}')">
-        <span class="ic">${F.icon}</span><span><div class="nm">${esc(F.name)}</div><div class="sub">${esc(F.sub)}</div></span>
-        <span class="lv"><span class="px">LV ${l.L}</span><div class="bar"><i style="width:${(l.cur/l.need*100).toFixed(0)}%"></i></div><div class="sub">${l.cur}/${l.need} XP</div></span></button>`}).join("")}
-      <div class="hint">Tap a floor to enter. The timer keeps running even if you close this page.</div></div>`;
-  }
-  document.getElementById("stats").innerHTML=[[d.rooms,"rooms"],[d.xp,"XP"],[d.clean,"clean"],[d.cursed,"cursed"]].map(([n,k])=>`<div><div class="n">${n}</div><div class="k">${k}</div></div>`).join("");
-  const inv=Object.keys(TIERS).filter(t=>S.inv[t]>0);
-  document.getElementById("inv").innerHTML=inv.length?inv.map(t=>`<div class="item"><span class="ic">${TIERS[t].icon}</span><span class="tx"><b>${TIERS[t].name}</b>${esc(S.settings[t])}</span><span class="ct">×${S.inv[t]}</span><button class="btn sm gold" onclick="useItem('${t}')">Open</button></div>`).join("")
-    :`<div class="empty">No chests yet. Clear rooms and roll the d20 to find loot.${S.pity>0?` (Pity counter: ${S.pity}/4 — a guaranteed chest is coming.)`:""}</div>`;
-  const c=Number(S.settings.cost)||40,pct=Math.min(100,S.coins/c*100);
-  document.getElementById("vault").innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span>🏆 ${esc(S.settings.goal)}</span><span class="px" style="font-size:10px;color:var(--gold)">${S.coins}/${c}</span></div>
-    <div class="bar" style="--c:var(--gold)"><i style="width:${pct}%"></i></div>
-    <div class="hint">Coins: Room +2 · Boss +5. Permanent — they carry across every run.</div>
-    ${S.coins>=c?`<div class="row"><button class="btn gold" onclick="claimVault()">Claim reward</button></div>`:""}`;
-  const days=[];const t=new Date();for(let i=13;i>=0;i--){const x=new Date(t);x.setDate(t.getDate()-i);const k=dayKey(x.getTime());days.push([k,(S.days[k]||{}).rooms||0,i===0]);}
+    $("play").innerHTML=`<div class="hand">${Object.keys(FLOORS).map((f,i)=>cardHTML(f,i,true)).join("")}</div>
+      <div class="hint">${d.rooms===0?"First room of the day? Pick <b style='color:#fff'>Room 0</b> — just open the work.":"Pick a room size, then play a card to enter."}</div>`;}
+  $("slots").innerHTML=Object.keys(TIERS).map(t=>{const n=S.inv[t];return `<div class="slot ${n?"":"off"} ${t==="rare"?"rare":""}"><span class="ct sh">×${n}</span>
+    <div class="ic">${TIERS[t].icon}</div><div class="tn">${TIERS[t].name}</div><div class="rw">${esc(S.settings[t])}</div>
+    ${n?`<button class="b org sm" onclick="useItem('${t}')">Open</button>`:""}</div>`}).join("");
+  $("pity").innerHTML=`<span>Pity</span><div class="pips">${[0,1,2,3].map(i=>`<i class="${i<S.pity?"on":""}"></i>`).join("")}</div>`;
+  const days=[],t=new Date();for(let i=13;i>=0;i--){const x=new Date(t);x.setDate(t.getDate()-i);const k=dayKey(x.getTime());days.push([k,(S.days[k]||{}).rooms||0,i===0]);}
   const mx=Math.max(4,...days.map(x=>x[1]));
-  document.getElementById("hist").innerHTML=days.map(([k,n,isT])=>`<div title="${k}: ${n} rooms"><i class="${isT?"today":""}" style="height:${n/mx*100}%"></i><span>${n||""}</span></div>`).join("");
-  renderModal();tick();
-}
-function renderModal(){const o=document.getElementById("overlay"),p=S.pending;if(!p){o.innerHTML="";return;}
-  const F=FLOORS[p.floor],K=KINDS[p.kind];
-  const head=`<h2 class="px">${p.cursed?"ROOM CLEARED… CURSED":"ROOM CLEARED!"}</h2><div>${F.icon} ${esc(F.name)} · ${K.name}</div><div class="hint">+${p.xp} XP${p.coins?` · +${p.coins} 🪙`:""}</div>${p.bonus.map(b=>`<div class="loot" style="color:var(--gold)">${esc(b)}</div>`).join("")}`;
-  let body;
-  if(p.cursed){body=`<div class="die">☠️</div><div class="loot">No loot roll this time.<small>Next room: phone in another room.</small></div><div class="row"><button class="btn gold" onclick="closeLoot()">Next room</button></div>`;}
-  else if(!p.roll){body=`<div class="die" id="die">d20</div><div class="row"><button class="btn gold" onclick="roll()">🎲 Roll for loot</button></div>`;}
-  else{const r=p.roll,T=r.tier?TIERS[r.tier]:null;
-    const lines={rare:"A RARE CHEST. The dungeon smiles on you.",chest:"A chest! Nicely done.",small:"Small chest. Every bit counts."};
-    body=`<div class="die ${r.tier==="rare"?"rare":""}">${r.tot}</div><div class="hint">rolled ${r.nat}${r.b?` + ${r.b} bonus`:""}${r.pity?" · pity kicked in":""}</div>
-      <div class="loot">${T?`${T.icon} ${lines[r.tier]}<small>${esc(S.settings[r.tier])} — added to inventory</small>`:`Empty room.<small>Nothing this time. Pity counter: ${S.pity}/4</small>`}</div>
-      <div class="row"><button class="btn gold" onclick="closeLoot()">Next room</button></div>`;}
-  o.innerHTML=`<div class="overlay"><div class="modal">${head}${body}</div></div>`;}
-function tick(){const a=S.active;if(!a){document.title="The Daily Run";return;}
+  $("hist").innerHTML=days.map(([k,n,isT])=>`<div title="${k}: ${n} rooms"><span>${n||""}</span><i class="${isT?"t":""}" style="height:${n/mx*80}%"></i></div>`).join("");
+  renderOverlay();tick();}
+function renderOverlay(){const o=$("overlay"),p=S.pending;
+  if(p){const F=FLOORS[p.floor],K=KINDS[p.kind];
+    let h=`<h2 class="sh">${p.cursed?"CLEARED… CURSED":"ROOM CLEARED!"}</h2><div class="sub">${F.icon} ${esc(F.name)} · ${K.name}</div>
+      <div class="earn"><div class="chipbox red sh" style="flex:0">+${p.xp} XP</div>${p.coins?`<div class="chipbox sh" style="flex:0;background:var(--orange);box-shadow:0 4px 0 var(--orange-d)">+$${p.coins}</div>`:""}</div>
+      ${p.bonus.map(b=>`<div class="bonus sh">${esc(b)}</div>`).join("")}`;
+    if(p.cursed)h+=`<div class="die dead">☠</div><div class="lootline">No loot roll this time.</div><div class="lootsub">Next room: phone in another room.</div><button class="b blu" onclick="closeLoot()">Next room</button>`;
+    else if(!p.roll)h+=`<div class="die" id="die">d20</div><button class="b org" onclick="roll()">🎲 Roll for loot</button>`;
+    else{const r=p.roll,T=r.tier&&TIERS[r.tier],L={rare:"A RARE CHEST!",chest:"A chest! Nicely done.",small:"Small chest. Every bit counts."};
+      h+=`<div class="die ${r.tier==="rare"?"rare":""}">${r.tot}</div><div class="lootsub">rolled ${r.nat}${r.b?` + ${r.b} bonus`:""}${r.pity?" · pity kicked in":""}</div>
+        <div class="lootline sh">${T?T.icon+" "+L[r.tier]:"Empty room."}</div><div class="lootsub">${T?esc(S.settings[r.tier])+" — added to inventory":"Nothing this time. Pity "+S.pity+"/4"}</div>
+        <button class="b blu" onclick="closeLoot()">Next room</button>`;}
+    o.innerHTML=`<div class="ov"><div class="panel modal">${h}</div></div>`;return;}
+  if(settingsOpen){const s=S.settings;
+    o.innerHTML=`<div class="ov" onclick="if(event.target===this)closeSettings()"><div class="panel modal"><h2 class="sh">SETTINGS</h2><div class="set">
+      <label>📦 Small chest reward<input id="sSmall" value="${esc(s.small)}"></label>
+      <label>🎁 Chest reward<input id="sChest" value="${esc(s.chest)}"></label>
+      <label>👑 Rare chest reward<input id="sRare" value="${esc(s.rare)}"></label>
+      <label>🏆 Vault goal<input id="sGoal" value="${esc(s.goal)}"></label>
+      <label>Coins needed<input id="sCost" type="number" min="1" value="${esc(s.cost)}"></label></div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="b grn" onclick="saveSettings()">Save</button><button class="b dk" onclick="closeSettings()">Close</button></div>
+      <div class="lbl" style="margin-top:16px">Backup</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="b dk sm" onclick="exportBackup()">⬇ Export</button>
+        <label class="b dk sm" style="cursor:pointer">⬆ Import<input type="file" accept=".json,application/json" style="display:none" onchange="importBackup(this.files[0]);this.value=''"></label></div>
+      <div class="sync">${esc(syncMsg)}</div></div></div>`;return;}
+  o.innerHTML="";}
+function tick(){const a=S.active;
+  if(!a&&S.brk){const left=S.brk.start+S.brk.dur-Date.now();if(left<=0){endBreak(true);return;}
+    const el=$("btimer");if(el)el.textContent=fmt(left);const bb=$("bbar");if(bb)bb.style.width=((1-left/S.brk.dur)*100).toFixed(2)+"%";
+    document.title="Break "+fmt(left);return;}
+  if(!a){document.title="The Daily Run";return;}
   const left=a.start+a.dur-Date.now();if(left<=0){finishRoom();return;}
-  const el=document.getElementById("timer");if(el)el.textContent=fmt(left);
-  const b=document.getElementById("tbar");if(b)b.style.width=((1-left/a.dur)*100).toFixed(1)+"%";
+  const el=$("timer");if(el)el.textContent=fmt(left);const b=$("tbar");if(b)b.style.width=((1-left/a.dur)*100).toFixed(2)+"%";
   document.title=fmt(left)+" · "+FLOORS[a.floor].name;}
 setInterval(tick,500);
-
-// settings
-const sb=document.getElementById("settingsBox");
-sb.addEventListener("toggle",()=>{if(!sb.open)return;sSmall.value=S.settings.small;sChest.value=S.settings.chest;sRare.value=S.settings.rare;sGoal.value=S.settings.goal;sCost.value=S.settings.cost;});
-document.getElementById("saveSet").onclick=()=>{S.settings.small=sSmall.value.trim()||defaults().settings.small;S.settings.chest=sChest.value.trim()||defaults().settings.chest;
-  S.settings.rare=sRare.value.trim()||defaults().settings.rare;S.settings.goal=sGoal.value.trim()||defaults().settings.goal;S.settings.cost=Math.max(1,parseInt(sCost.value)||40);
-  save();render();sb.open=false;toast("Settings saved.");};
 render();
+
+/* ================= swirling background ================= */
+(function(){const cv=$("bg"),gl=cv.getContext("webgl");const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!gl){cv.style.background="radial-gradient(circle at 30% 30%,#2f7a63,#123a33 70%)";return;}
+  const vs="attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const fs=`precision mediump float;uniform float t;uniform vec2 r;
+  void main(){vec2 uv=(gl_FragCoord.xy-.5*r)/min(r.x,r.y);
+    float len=length(uv);float ang=atan(uv.y,uv.x)-t*.05+len*2.2;
+    vec2 p=vec2(cos(ang),sin(ang))*len*3.2;
+    for(int i=0;i<5;i++){float fi=float(i);p+=vec2(sin(p.y*1.2+t*.18+fi*1.7),cos(p.x*1.1-t*.14+fi*.9))*.42;}
+    float v=sin(p.x*.9+p.y*.7)*.5+.5;float w=sin(p.x*.5-p.y*.8+1.3)*.5+.5;
+    vec3 dark=vec3(.06,.2,.18),mid=vec3(.13,.38,.32),lite=vec3(.24,.55,.44),acc=vec3(.55,.2,.22);
+    vec3 col=mix(dark,mid,smoothstep(.25,.6,v));col=mix(col,lite,smoothstep(.72,.95,v)*.8);col=mix(col,acc,smoothstep(.8,1.,w)*.35);
+    col*=1.-.35*smoothstep(.4,1.2,len);gl_FragColor=vec4(col,1.);}`;
+  function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(pr,"p");gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const ut=gl.getUniformLocation(pr,"t"),ur=gl.getUniformLocation(pr,"r");const SCALE=.22;
+  function size(){cv.width=Math.max(1,Math.round(innerWidth*SCALE));cv.height=Math.max(1,Math.round(innerHeight*SCALE));gl.viewport(0,0,cv.width,cv.height);}
+  size();addEventListener("resize",()=>{size();if(still)draw(20);});
+  function draw(time){gl.uniform1f(ut,time);gl.uniform2f(ur,cv.width,cv.height);gl.drawArrays(gl.TRIANGLES,0,3);}
+  if(still){draw(20);return;}
+  const t0=performance.now();(function loop(){if(!document.hidden)draw((performance.now()-t0)/1000+20);requestAnimationFrame(loop);})();
+})();
 </script>
 </body>
 </html>
